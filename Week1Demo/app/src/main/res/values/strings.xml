@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Week1Demo</string>
+    <string name="title1">Fall 2025</string>
+    <string name="title2">YWCA Toronto</string>
+    <string name="simple_calculator">Simple Calculator</string>
+    <string name="enter_the_second_number">Enter the second number</string>
+    <string name="enter_the_first_number">Enter the first number</string>
+    <string name="add">+</string>
+    <string name="sub">-</string>
+    <string name="times">*</string>
+    <string name="div">/</string>
+    <string name="enter_your_name">Enter Your Name</string>
+
+</resources>

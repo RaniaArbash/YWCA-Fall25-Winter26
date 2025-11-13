@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iosImage"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ios"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <TextView
+        android:id="@+id/iostext"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="iOS"
+        android:textSize="30sp"
+        android:layout_toRightOf="@id/iosImage"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/androidText"
+        />
+
+<ImageView
+    android:id="@+id/androidImage"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:src="@drawable/android"
+    android:layout_below="@id/iosImage"
+    android:layout_alignParentStart="true"
+
+    />
+
+    <TextView
+        android:id="@+id/androidText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Android"
+        android:textSize="30sp"
+        android:layout_toRightOf="@id/androidImage"
+        android:layout_below="@id/iosImage"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        />
+
+
+
+</RelativeLayout>
