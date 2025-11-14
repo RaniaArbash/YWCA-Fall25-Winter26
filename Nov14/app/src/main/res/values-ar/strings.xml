@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Nov14</string>
+    <string name="enter_your_name">أدخل اسمك</string>
+    <string name="enter_your_college">ادخل مدرستك</string>
+    <string name="select_the_background_color">اختر لونك المفضل</string>
+    <string name="red">احمر</string>
+    <string name="green">اخضر</string>
+    <string name="blue">ازرق</string>
+    <string name="log_in">الدخول</string>
+</resources>
