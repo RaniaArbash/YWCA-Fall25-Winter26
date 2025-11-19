@@ -31,8 +31,18 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(this,"Welcome to your list",Toast.LENGTH_LONG).show();
+        this.setTitle("BaseAdapter List");
 
         mainActivityList =  ((MyApp)getApplication()).todoManager.tasks;
+        FloatingActionButton toList = findViewById(R.id.gotorecyceler);
+        toList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, RecyclerViewActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         tasksTable = findViewById(R.id.taskstable);
         addNewTask = findViewById(R.id.addnewtask);

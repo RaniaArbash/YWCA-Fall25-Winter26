@@ -19,8 +19,11 @@ public class AddNewToDoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_new_to_do);
         Button save = findViewById(R.id.saveButton);
+        this.setTitle("Add New Task");
+
         Button cancel = findViewById(R.id.cancelButton);
         EditText taskText = findViewById(R.id.taskText);
         SwitchCompat isurgent = findViewById(R.id.isUrgentSwitch);
