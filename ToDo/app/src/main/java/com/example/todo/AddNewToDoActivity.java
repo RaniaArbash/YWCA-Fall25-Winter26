@@ -7,18 +7,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class AddNewToDo extends AppCompatActivity {
+public class AddNewToDoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

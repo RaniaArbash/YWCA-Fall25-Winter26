@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -60,8 +61,10 @@ public class ToDosBaseAdapter extends BaseAdapter {
        date.setText(toDos.get(i).date_time.toString());
         if (toDos.get(i).isUrgent) {
             v.setBackgroundColor(context.getResources().getColor(R.color.red));
+            urgency_switch.setChecked(toDos.get(i).isUrgent);
         } else {
             v.setBackgroundColor(context.getResources().getColor(R.color.green));
+            urgency_switch.setChecked(toDos.get(i).isUrgent);
         }
 
         // delete one task
@@ -73,14 +76,12 @@ public class ToDosBaseAdapter extends BaseAdapter {
             }
         });
 
-        urgency_switch.setOnClickListener(new View.OnClickListener() {
+        urgency_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                // I need to update the task from green to red or red to green
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 updateListener.updateTask(i);
             }
         });
-
         return v;
     }
 }

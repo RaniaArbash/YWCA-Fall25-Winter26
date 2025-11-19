@@ -11,14 +11,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
     implements ToDosBaseAdapter.UpdateTaskListener,
@@ -30,13 +25,15 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton addNewTask;
     ArrayList<ToDo> mainActivityList;
     ToDosBaseAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(this,"Welcome to your list",Toast.LENGTH_LONG).show();
 
-        mainActivityList =  ((MyApp)getApplication()).tasks;
+        mainActivityList =  ((MyApp)getApplication()).todoManager.tasks;
+
         tasksTable = findViewById(R.id.taskstable);
         addNewTask = findViewById(R.id.addnewtask);
         adapter = new ToDosBaseAdapter(mainActivityList,this);
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 Intent data = result.getData();
                 ToDo d = (ToDo) data.getSerializableExtra("newtodo");
-                ((MyApp)getApplication()).tasks.add(d);
+                ((MyApp)getApplication()).todoManager.addTask(d);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         addNewTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, AddNewToDo.class);
+                Intent i = new Intent(MainActivity.this, AddNewToDoActivity.class);
                 myLauncher.launch(i);
 
             }
@@ -73,14 +70,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void deleteTask(int i) {
-        ((MyApp)getApplication()).tasks.remove(i);
+        // if the tasks are in database
+        ((MyApp)getApplication()).todoManager.deleteTask(i);
         adapter.notifyDataSetChanged();
 
     }
 
     @Override
     public void updateTask(int i) {
-        ((MyApp)getApplication()).tasks.get(i).isUrgent = !((MyApp)getApplication()).tasks.get(i).isUrgent;
+        ((MyApp)getApplication()).todoManager.updateTask(i);
         adapter.notifyDataSetChanged();
     }
 }

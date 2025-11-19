@@ -25,8 +25,7 @@
         android:id="@+id/urgency_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        android:layout_weight="1" />
 
     <ImageButton
         android:id="@+id/delete_task"
