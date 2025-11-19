@@ -15,7 +15,6 @@ public class RecyclerViewActivity extends AppCompatActivity
     implements RecyclerViewAdapter.UpdateTaskListener,
         RecyclerViewAdapter.DeleteTaskListener
 {
-
     RecyclerView recyclerList;
     RecyclerViewAdapter adapter;
     @Override
