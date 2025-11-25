@@ -2,6 +2,9 @@ package com.example.todo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -10,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,5 +94,30 @@ public class MainActivity extends AppCompatActivity
     public void updateTask(int i) {
         ((MyApp)getApplication()).todoManager.updateTask(i);
         adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.myfirstmenu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+         super.onOptionsItemSelected(item);
+
+         if (item.getItemId() == R.id.addtask){
+             Intent i = new Intent(MainActivity.this, AddNewToDoActivity.class);
+             myLauncher.launch(i);
+         }
+         else if (item.getItemId() == R.id.gotolist){
+             Intent i = new Intent(MainActivity.this, RecyclerViewActivity.class);
+             startActivity(i);
+         }
+         return true;
+
     }
 }

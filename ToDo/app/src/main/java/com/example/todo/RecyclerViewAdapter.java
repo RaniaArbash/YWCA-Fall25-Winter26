@@ -26,7 +26,7 @@ public class RecyclerViewAdapter extends
     interface DeleteTaskListener{
         void deleteTask(int i);
     }
-
+// MVC
     UpdateTaskListener updateListener;
     DeleteTaskListener deleteListener;
 
