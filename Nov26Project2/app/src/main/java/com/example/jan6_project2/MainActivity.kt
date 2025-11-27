@@ -15,8 +15,6 @@ import com.example.jan6_project2.Navigation.MyNavHost
 import com.example.jan6_project2.Scaffold.MyBottonBar
 import com.example.jan6_project2.Scaffold.MyTopBar
 import com.example.jan6_project2.Scaffold.myFAB
-import com.example.jan6_project2.Screens.CounterComposable
-import com.example.jan6_project2.Screens.LogInComposable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
