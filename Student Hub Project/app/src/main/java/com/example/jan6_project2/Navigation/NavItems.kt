@@ -3,11 +3,17 @@ package com.example.jan6_project2.Navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Notifications
 
 sealed class NavItems {
-    object calculator : Item("calc","Calculator", Icons.Default.AccountBox)
-    object counter : Item("counter","Counter", Icons.Default.Face)
-    object logIn : Item("login","logIn", Icons.Default.AccountCircle)
+    object home : Item("home","Home", Icons.Default.Home)
+    object courses : Item("courses","Courses", Icons.Default.Info)
+    object assignments : Item("assignments","Assignments", Icons.Default.DateRange)
+    object profile : Item("profile","Profile", Icons.Default.Face)
+    object notifications : Item("notifications","Notifications", Icons.Default.Notifications)
 
 }

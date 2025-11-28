@@ -11,7 +11,7 @@ import com.example.jan6_project2.Navigation.NavItems
 
 @Composable
 fun MyBottonBar(onNavigate : (String)->Unit){
-    var navItems = listOf(NavItems.calculator, NavItems.counter, NavItems.logIn)
+    var navItems = listOf(NavItems.calculator,NavItems.calculator2, NavItems.counter, NavItems.logIn)
     var selectedIndex = remember { mutableStateOf(0) }
     NavigationBar {
         navItems.forEachIndexed { index, item ->

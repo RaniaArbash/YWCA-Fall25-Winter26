@@ -11,7 +11,7 @@ import com.example.jan6_project2.Navigation.NavItems
 
 @Composable
 fun MyBottomBar(onNavigate : (String)->Unit){
-    var navItems = listOf(NavItems.calculator, NavItems.counter, NavItems.logIn)
+    var navItems = listOf(NavItems.home,NavItems.profile,NavItems.notifications, NavItems.courses, NavItems.assignments)
     var selectedIndex = remember { mutableStateOf(0) }
     NavigationBar {
         navItems.forEachIndexed { index, item ->

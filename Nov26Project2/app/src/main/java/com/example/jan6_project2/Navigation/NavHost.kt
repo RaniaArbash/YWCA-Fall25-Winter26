@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.jan6_project2.CounterViewModel
 import com.example.jan6_project2.Screens.CalculatorScreen
+import com.example.jan6_project2.Screens.CalculatorScreen2
 import com.example.jan6_project2.Screens.CounterComposable
 import com.example.jan6_project2.Screens.LogInComposable
 
@@ -15,6 +16,8 @@ fun MyNavHost(navController : NavHostController, myVM: CounterViewModel){
         startDestination = NavItems.calculator.path){
 
         composable(route = NavItems.calculator.path ) { CalculatorScreen() }
+        composable(route = NavItems.calculator2.path ) { CalculatorScreen2() }
+
         composable(route = NavItems.counter.path ) { CounterComposable(myVM) }
         composable(route = NavItems.logIn.path ) { LogInComposable(myVM) }
 

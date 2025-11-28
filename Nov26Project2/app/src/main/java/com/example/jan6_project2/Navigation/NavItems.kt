@@ -7,6 +7,8 @@ import androidx.compose.material.icons.filled.Face
 
 sealed class NavItems {
     object calculator : Item("calc","Calculator", Icons.Default.AccountBox)
+    object calculator2 : Item("calc2","Calculator", Icons.Default.AccountBox)
+
     object counter : Item("counter","Counter", Icons.Default.Face)
     object logIn : Item("login","logIn", Icons.Default.AccountCircle)
 
