@@ -13,21 +13,20 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.jan6_project2.Navigation.MyNavHost
-import com.example.jan6_project2.Scaffold.MyBottonBar
+import com.example.jan6_project2.Scaffold.MyBottomBar
 import com.example.jan6_project2.Scaffold.MyTopBar
 import com.example.jan6_project2.Scaffold.myFAB
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      // val myVM = CounterViewModel()
         setContent {
             val myVM : CounterViewModel = viewModel()
             val navController = rememberNavController()
             Scaffold (
                 topBar = { MyTopBar() },
                 floatingActionButton = { myFAB() },
-                bottomBar = { MyBottonBar { path->
+                bottomBar = { MyBottomBar { path->
                     navController.navigate(path)
                 }}
 
