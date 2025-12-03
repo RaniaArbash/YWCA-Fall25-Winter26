@@ -1,5 +1,4 @@
-package com.example.weatherapp_fall25_ywca.DataLayer
-
+package com.example.weatherapp_fall25_ywca.DataLayer.CitiesData
 
 class CitiesRepo{
 

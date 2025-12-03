@@ -1,5 +1,6 @@
-package com.example.weatherapp_fall25_ywca.DataLayer
+package com.example.weatherapp_fall25_ywca.DataLayer.CitiesData
 
+import com.example.weatherapp_fall25_ywca.DataLayer.CitiesData.GeoBytesAPI
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -11,5 +12,4 @@ object CitiesApiService { // creating the object
         addConverterFactory(GsonConverterFactory.create())
             .build().create(GeoBytesAPI::class.java)
     }
-
 }
