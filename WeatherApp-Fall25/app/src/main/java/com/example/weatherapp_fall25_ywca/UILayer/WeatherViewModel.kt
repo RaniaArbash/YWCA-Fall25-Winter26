@@ -21,4 +21,11 @@ class WeatherViewModel: ViewModel() {
         }
     }
 
+    fun loadWeatherForLocation(lat: Double ,lon: Double){
+        viewModelScope.launch {
+            val result = weatherRepo.getWeatherByLocation(lat, lon)
+            weatherState.value = result
+        }
+    }
+
 }

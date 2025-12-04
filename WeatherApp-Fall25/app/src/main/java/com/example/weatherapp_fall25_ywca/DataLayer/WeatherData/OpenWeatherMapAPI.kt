@@ -11,4 +11,11 @@ interface OpenWeatherMapAPI {
                            @Query(value = "units") units: String = "metric"
                            ): WeatherResponse
 
+
+    @GET("weather")
+    suspend fun getWeatherByLocation(@Query("lat") lat: Double,
+                                     @Query(value = "lon") lon: Double,
+                                     @Query(value = "appid") apikey: String = "ecf5553cc5b15522aea8026824cb8085",
+                                     @Query(value = "units") units: String = "metric"
+    ): WeatherResponse
 }

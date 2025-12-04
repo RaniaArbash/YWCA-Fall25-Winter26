@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.weatherapp_fall25_ywca.UILayer.CitySearchScreen
+import com.example.weatherapp_fall25_ywca.UILayer.LocationAndWeatherScreen
 import com.example.weatherapp_fall25_ywca.UILayer.WeatherScreen
 import com.example.weatherapp_fall25_ywca.ui.theme.WeatherApp_Fall25_YWCATheme
 
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
                     innerPadding ->
                     Column (modifier = Modifier.padding(innerPadding).fillMaxSize(),
                         verticalArrangement = Arrangement.SpaceBetween) {
-                        MyNavHost(navController)
+                       // MyNavHost(navController)
+                        LocationAndWeatherScreen()
                     }
                     }
             }
@@ -48,6 +50,9 @@ fun MyNavHost(navController : NavHostController){
             backStakeEntry ->
             val cityName = backStakeEntry.arguments?.getString("cityName") ?:""
             WeatherScreen(cityName)
+        }
+        composable(route="location") {
+            LocationAndWeatherScreen()
         }
     }
 }
