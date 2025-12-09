@@ -12,13 +12,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.weatherapp_fall25_ywca.UILayer.CitySearchScreen
-import com.example.weatherapp_fall25_ywca.UILayer.LocationAndWeatherScreen
-import com.example.weatherapp_fall25_ywca.UILayer.WeatherScreen
+import com.example.weatherapp_fall25_ywca.Navigation.MainScaffold
 import com.example.weatherapp_fall25_ywca.ui.theme.WeatherApp_Fall25_YWCATheme
 
 class MainActivity : ComponentActivity() {
@@ -26,34 +21,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
             WeatherApp_Fall25_YWCATheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) {
-                    innerPadding ->
-                    Column (modifier = Modifier.padding(innerPadding).fillMaxSize(),
-                        verticalArrangement = Arrangement.SpaceBetween) {
-                       // MyNavHost(navController)
-                        LocationAndWeatherScreen()
-                    }
-                    }
+               MainScaffold()
             }
         }
     }
 }
 
-@Composable
-fun MyNavHost(navController : NavHostController){
-    NavHost(navController = navController, startDestination = "citylist"){
-        composable("citylist") {
-            CitySearchScreen(navController) }
-        composable(route="weather/{cityName}") {
-            backStakeEntry ->
-            val cityName = backStakeEntry.arguments?.getString("cityName") ?:""
-            WeatherScreen(cityName)
-        }
-        composable(route="location") {
-            LocationAndWeatherScreen()
-        }
-    }
-}
+
 

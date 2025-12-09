@@ -45,6 +45,13 @@ dependencies {
 
     val nav_version = "2.9.6"
 
+//    //google maps compose
+//    implementation("com.google.android.gms:play-services-maps:19.2.0")
+//  //  implementation("com.google.maps.android:maps-compose:6.12.0")
+
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.maps.android:maps-compose:2.11.3")
+
     // Jetpack Compose integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
     // Retrofit

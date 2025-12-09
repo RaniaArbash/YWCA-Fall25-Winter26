@@ -1,10 +1,12 @@
 package com.example.weatherapp_fall25_ywca.UILayer
 
 import android.Manifest
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -16,6 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun LocationAndWeatherScreen(locationVM: LocationViewModel = viewModel()){
@@ -28,8 +36,8 @@ fun LocationAndWeatherScreen(locationVM: LocationViewModel = viewModel()){
         onResult = {granted ->
                   if (granted) {
                       locationVM.fetchLocation()
-
-                     // location?.let { locationVM.fetchWeatherForLocation(it.latitude, location!!.longitude) }
+                  }else {
+                      Log.d("Error","No permission")
                   }
             } )
 
@@ -38,12 +46,12 @@ fun LocationAndWeatherScreen(locationVM: LocationViewModel = viewModel()){
     }
 
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Column (modifier = Modifier.fillMaxSize()) {
         if (location == null) {
             CircularProgressIndicator()
         } else {
             locationVM.fetchWeatherForLocation(location!!.latitude, location!!.longitude)
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column() {
                 Text(
                     fontSize = 25.sp,
                     text = "Lat: ${location!!.latitude}, Lon: ${location!!.longitude}"
@@ -62,9 +70,37 @@ fun LocationAndWeatherScreen(locationVM: LocationViewModel = viewModel()){
                             text = it
                         )
                     }
-
+                    MapComposable(modifier = Modifier.fillMaxHeight(),
+                        location!!.latitude,
+                        location!!.longitude
+                    )
                 }
             }
+
+
         }
     }
     }
+
+
+
+@Composable
+fun MapComposable(
+    modifier: Modifier,
+    lat: Double?,
+    lon: Double?,
+) {
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(LatLng(lat!!, lon!!), 10f)
+    }
+
+    GoogleMap(
+        modifier = Modifier.fillMaxHeight(0.5f),
+        cameraPositionState = cameraPositionState,
+    ) {
+        Marker(
+            state = MarkerState(position = LatLng(lat!!, lon!!)),
+            title = "Selected Location"
+        )
+    }
+}
