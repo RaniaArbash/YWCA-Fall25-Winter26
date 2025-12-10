@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.weatherapp_fall25_ywca.UILayer.CitySearchScreen
 import com.example.weatherapp_fall25_ywca.UILayer.LocationAndWeatherScreen
+import com.example.weatherapp_fall25_ywca.UILayer.MapScreen
 import com.example.weatherapp_fall25_ywca.UILayer.WeatherScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,10 +46,15 @@ fun MainScaffold() {
                 NavigationBarItem(
                     selected = currentRoute == ScreenRoutes.CitySearch,
                     onClick = { navController.navigate(ScreenRoutes.CitySearch) },
-                    icon = { Icon(Icons.Filled.Place, contentDescription = "Search") },
+                    icon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
                     label = { Text("City Search") }
                 )
-
+                NavigationBarItem(
+                    selected = currentRoute == ScreenRoutes.MapScreen,
+                    onClick = { navController.navigate(ScreenRoutes.MapScreen) },
+                    icon = { Icon(Icons.Filled.Place, contentDescription = "Map") },
+                    label = { Text("Google Map") }
+                )
             }
         }
     ) { innerPadding ->
@@ -75,17 +82,25 @@ fun AppNavHost(
 
         // Screen 2 – Currency Exchange
         composable(ScreenRoutes.CitySearch) {
-            CitySearchStack(navController)
+            CitySearchStack()
+        }
+
+
+        // Screen 3 – Map
+        composable(ScreenRoutes.MapScreen) {
+            MapScreen()
         }
 
     }
 }
 
 @Composable
-fun CitySearchStack(navController1 : NavHostController){
-    NavHost(navController = navController1, startDestination = "citylist"){
+fun CitySearchStack(){
+    val stackNavController = rememberNavController()
+
+    NavHost(navController = stackNavController, startDestination = "citylist"){
         composable("citylist") {
-            CitySearchScreen(navController1) }
+            CitySearchScreen(stackNavController) }
         composable(route="weather/{cityName}") {
                 backStakeEntry ->
             val cityName = backStakeEntry.arguments?.getString("cityName") ?:""

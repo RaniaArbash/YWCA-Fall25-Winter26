@@ -51,7 +51,7 @@ fun LocationAndWeatherScreen(locationVM: LocationViewModel = viewModel()){
             CircularProgressIndicator()
         } else {
             locationVM.fetchWeatherForLocation(location!!.latitude, location!!.longitude)
-            Column() {
+            Column(modifier = Modifier.fillMaxHeight(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     fontSize = 25.sp,
                     text = "Lat: ${location!!.latitude}, Lon: ${location!!.longitude}"
@@ -71,6 +71,7 @@ fun LocationAndWeatherScreen(locationVM: LocationViewModel = viewModel()){
                         )
                     }
                     MapComposable(modifier = Modifier.fillMaxHeight(),
+
                         location!!.latitude,
                         location!!.longitude
                     )
@@ -91,11 +92,11 @@ fun MapComposable(
     lon: Double?,
 ) {
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(LatLng(lat!!, lon!!), 10f)
+        position = CameraPosition.fromLatLngZoom(LatLng(lat!!, lon!!), 5f)
     }
 
     GoogleMap(
-        modifier = Modifier.fillMaxHeight(0.5f),
+        modifier = modifier.fillMaxHeight(0.5f),
         cameraPositionState = cameraPositionState,
     ) {
         Marker(

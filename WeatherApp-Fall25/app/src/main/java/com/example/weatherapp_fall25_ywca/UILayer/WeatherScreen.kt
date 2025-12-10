@@ -2,6 +2,7 @@ package com.example.weatherapp_fall25_ywca.UILayer
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -31,8 +32,8 @@ fun WeatherScreen( cityName: String, wvm : WeatherViewModel = viewModel()){
                 Text(fontSize = 40.sp, text =  cityName )
                 Text(fontSize = 50.sp, text =   data.value!!.main.temp.toString()+"C")
                 Text(fontSize = 35.sp, text = "Feels Like: " + data.value!!.main.feels_like.toString())
-
                 Text(fontSize = 40.sp, text = data.value!!.weather[0].description)
+                MapComposable(modifier = Modifier.fillMaxHeight(0.5f), lat = data.value!!.coord.lat, lon = data.value!!.coord.lon )
             }
         }
     }
