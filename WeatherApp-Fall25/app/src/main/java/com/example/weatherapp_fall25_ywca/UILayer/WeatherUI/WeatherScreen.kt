@@ -1,4 +1,4 @@
-package com.example.weatherapp_fall25_ywca.UILayer
+package com.example.weatherapp_fall25_ywca.UILayer.WeatherUI
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,9 +11,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weatherapp_fall25_ywca.UILayer.LocationUI.MapComposable
 
 @Composable
 fun WeatherScreen( cityName: String, wvm : WeatherViewModel = viewModel()){
@@ -33,7 +33,11 @@ fun WeatherScreen( cityName: String, wvm : WeatherViewModel = viewModel()){
                 Text(fontSize = 50.sp, text =   data.value!!.main.temp.toString()+"C")
                 Text(fontSize = 35.sp, text = "Feels Like: " + data.value!!.main.feels_like.toString())
                 Text(fontSize = 40.sp, text = data.value!!.weather[0].description)
-                MapComposable(modifier = Modifier.fillMaxHeight(0.5f), lat = data.value!!.coord.lat, lon = data.value!!.coord.lon )
+                MapComposable(
+                    modifier = Modifier.fillMaxHeight(0.5f),
+                    lat = data.value!!.coord.lat,
+                    lon = data.value!!.coord.lon
+                )
             }
         }
     }

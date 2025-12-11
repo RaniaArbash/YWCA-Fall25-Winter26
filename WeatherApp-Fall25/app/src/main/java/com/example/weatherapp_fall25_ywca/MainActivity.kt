@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.weatherapp_fall25_ywca.Navigation.MainScaffold
-import com.example.weatherapp_fall25_ywca.UILayer.MapScreen
 import com.example.weatherapp_fall25_ywca.ui.theme.WeatherApp_Fall25_YWCATheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +13,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherApp_Fall25_YWCATheme {
-               MainScaffold()
+              MainScaffold()
+
 
             }
         }

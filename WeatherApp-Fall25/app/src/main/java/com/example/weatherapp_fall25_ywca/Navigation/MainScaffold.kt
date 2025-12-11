@@ -3,24 +3,24 @@ package com.example.weatherapp_fall25_ywca.Navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.weatherapp_fall25_ywca.UILayer.CitySearchScreen
-import com.example.weatherapp_fall25_ywca.UILayer.LocationAndWeatherScreen
+import com.example.weatherapp_fall25_ywca.UILayer.CityUI.CitySearchScreen
+import com.example.weatherapp_fall25_ywca.UILayer.FavCityUI.FavCitiesScreen
+import com.example.weatherapp_fall25_ywca.UILayer.LocationUI.LocationAndWeatherScreen
 import com.example.weatherapp_fall25_ywca.UILayer.MapScreen
-import com.example.weatherapp_fall25_ywca.UILayer.WeatherScreen
+import com.example.weatherapp_fall25_ywca.UILayer.WeatherUI.WeatherScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +54,12 @@ fun MainScaffold() {
                     onClick = { navController.navigate(ScreenRoutes.MapScreen) },
                     icon = { Icon(Icons.Filled.Place, contentDescription = "Map") },
                     label = { Text("Google Map") }
+                )
+                NavigationBarItem(
+                    selected = currentRoute == ScreenRoutes.FavCities,
+                    onClick = { navController.navigate(ScreenRoutes.FavCities) },
+                    icon = { Icon(Icons.Filled.Favorite, contentDescription = "FavCities") },
+                    label = { Text("Favoriates") }
                 )
             }
         }
@@ -91,6 +97,10 @@ fun AppNavHost(
             MapScreen()
         }
 
+        //Data base
+        composable(ScreenRoutes.FavCities) {
+            FavCitiesScreen()
+        }
     }
 }
 

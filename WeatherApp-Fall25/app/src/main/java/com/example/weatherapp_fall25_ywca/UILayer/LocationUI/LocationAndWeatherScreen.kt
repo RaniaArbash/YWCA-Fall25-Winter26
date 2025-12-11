@@ -1,10 +1,9 @@
-package com.example.weatherapp_fall25_ywca.UILayer
+package com.example.weatherapp_fall25_ywca.UILayer.LocationUI
 
 import android.Manifest
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize

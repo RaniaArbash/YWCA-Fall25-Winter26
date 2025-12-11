@@ -1,4 +1,4 @@
-package com.example.weatherapp_fall25_ywca.UILayer
+package com.example.weatherapp_fall25_ywca.UILayer.WeatherUI
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,7 +1,9 @@
-package com.example.weatherapp_fall25_ywca.UILayer
+package com.example.weatherapp_fall25_ywca.UILayer.LocationUI
 
+import android.Manifest
 import android.app.Application
 import android.location.Location
+import androidx.annotation.RequiresPermission
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp_fall25_ywca.DataLayer.LocationData.LocationService
@@ -26,7 +28,7 @@ class LocationViewModel(application: Application):
 
 
     var weatherRepo = WeatherRepo()
-    @androidx.annotation.RequiresPermission(allOf = [android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION])
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     fun fetchLocation(){
         viewModelScope.launch  {
             try {

@@ -1,9 +1,8 @@
-package com.example.weatherapp_fall25_ywca.UILayer
+package com.example.weatherapp_fall25_ywca.UILayer.CityUI
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp_fall25_ywca.DataLayer.CitiesData.CitiesRepo
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

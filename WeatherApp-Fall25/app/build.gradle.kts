@@ -2,13 +2,16 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    //alias(libs.plugins.ksp)
+    //alias(libs.plugins.hilt-android)
+    id("kotlin-kapt") apply true
+
 }
 
 android {
     namespace = "com.example.weatherapp_fall25_ywca"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
+
 
     defaultConfig {
         applicationId = "com.example.weatherapp_fall25_ywca"
@@ -42,12 +45,27 @@ android {
 }
 
 dependencies {
+    //hilt
+  //  implementation(libs.hilt-android)
+//    ksp(libs.hilt-compiler)
 
     val nav_version = "2.9.6"
+
+// ROOM
+    val room_version = "2.8.4"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+   // ksp("androidx.room:room-compiler:$room_version")
+
+    kapt("androidx.room:room-compiler:$room_version")
+
 
 //    //google maps compose
 //    implementation("com.google.android.gms:play-services-maps:19.2.0")
 //  //  implementation("com.google.maps.android:maps-compose:6.12.0")
+
+
 
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.maps.android:maps-compose:2.11.3")
