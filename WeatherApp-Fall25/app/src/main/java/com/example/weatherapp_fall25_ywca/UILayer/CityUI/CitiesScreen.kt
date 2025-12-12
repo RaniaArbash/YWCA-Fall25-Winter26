@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,6 +32,7 @@ import androidx.navigation.NavController
 import com.example.weatherapp_fall25_ywca.DataLayer.RoomDatabase.CitiesDatabase
 import com.example.weatherapp_fall25_ywca.DataLayer.RoomDatabase.CityRepository
 import com.example.weatherapp_fall25_ywca.DataLayer.RoomDatabase.CityViewModelFactory
+import com.example.weatherapp_fall25_ywca.UILayer.CloudUI.CloudDatabaseViewModel
 import com.example.weatherapp_fall25_ywca.UILayer.FavCityUI.FavCityViewModel
 
 @Composable
@@ -47,8 +49,8 @@ fun CitySearchScreen(navController: NavController, vm: CitiesViewModel = viewMod
     val database = CitiesDatabase.getDB(context)
     val cityRepo = CityRepository(database.cityDao())
     val factory = CityViewModelFactory(cityRepo)
-    val cityVM : FavCityViewModel = viewModel(factory = factory)
-
+    val roomCityVM : FavCityViewModel = viewModel(factory = factory)
+    val cloudDBVM : CloudDatabaseViewModel = viewModel()
 
     LaunchedEffect (""){
        vm.noSearch()
@@ -91,7 +93,9 @@ fun CitySearchScreen(navController: NavController, vm: CitiesViewModel = viewMod
                         okButton = "Yes, Save",
                         noButton = "NO, Don't Save"
                         , onSave = {
-                            cityVM.saveCity(selectedCity,0.0,0.0)
+                            roomCityVM.saveCity(selectedCity,0.0,0.0)
+                            cloudDBVM.saveCityToCloudDB(selectedCity,0.0,0.0)
+
                             navController.navigate("weather/${selectedCity}")
                             showAlert.value = false
                         }, onNotSave = {
@@ -104,33 +108,66 @@ fun CitySearchScreen(navController: NavController, vm: CitiesViewModel = viewMod
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlertComposable(city: String,
-                    message: String,
-                    okButton: String,
-                    noButton: String ,
-                    onSave: ()->Unit,
-                    onNotSave: ()->Unit ){
+fun AlertComposable(
+    city: String,
+    message: String,
+    okButton: String,
+    noButton: String,
+    onSave: () -> Unit,
+    onNotSave: () -> Unit
+) {
     AlertDialog(
-        modifier = Modifier.background(Color.White),
-        onDismissRequest = {}) {
-        Column {
-            Text(message)
-            Row {
-                Button(onClick = {
-                    onSave()
-                }) {
-                    Text(okButton)
-                }
-                Button(onClick = {
-                    onNotSave()
-                }) {
-                    Text(noButton)
-                }
+        onDismissRequest = { /* disable dismiss */ },
+        title = {
+            Text(text = city)
+        },
+        text = {
+            Text(text = message)
+        },
+        confirmButton = {
+            TextButton(onClick = onSave) {
+                Text(okButton)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onNotSave) {
+                Text(noButton)
             }
         }
-
-    }
+    )
 }
+
+
+
+//
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun AlertComposable(city: String,
+//                    message: String,
+//                    okButton: String,
+//                    noButton: String ,
+//                    onSave: ()->Unit,
+//                    onNotSave: ()->Unit ){
+//    AlertDialog(
+//        modifier = Modifier.background(Color.White),
+//        onDismissRequest = {}) {
+//        Column {
+//            Text(message)
+//            Row {
+//                Button(onClick = {
+//                    onSave()
+//                }) {
+//                    Text(okButton)
+//                }
+//                Button(onClick = {
+//                    onNotSave()
+//                }) {
+//                    Text(noButton)
+//                }
+//            }
+//        }
+//
+//    }
+//}

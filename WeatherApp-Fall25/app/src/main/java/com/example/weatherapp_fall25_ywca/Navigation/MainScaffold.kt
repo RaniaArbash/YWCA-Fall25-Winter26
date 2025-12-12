@@ -3,6 +3,8 @@ package com.example.weatherapp_fall25_ywca.Navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Place
@@ -17,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.weatherapp_fall25_ywca.UILayer.CityUI.CitySearchScreen
+import com.example.weatherapp_fall25_ywca.UILayer.CloudUI.CloudFavListScreen
 import com.example.weatherapp_fall25_ywca.UILayer.FavCityUI.FavCitiesScreen
 import com.example.weatherapp_fall25_ywca.UILayer.LocationUI.LocationAndWeatherScreen
 import com.example.weatherapp_fall25_ywca.UILayer.MapScreen
@@ -61,6 +64,12 @@ fun MainScaffold() {
                     icon = { Icon(Icons.Filled.Favorite, contentDescription = "FavCities") },
                     label = { Text("Favoriates") }
                 )
+                NavigationBarItem(
+                    selected = currentRoute == ScreenRoutes.CloudCities,
+                    onClick = { navController.navigate(ScreenRoutes.CloudCities) },
+                    icon = { Icon(Icons.Filled.AccountBox, contentDescription = "CloudDBCities") },
+                    label = { Text("Cloud Cities") }
+                )
             }
         }
     ) { innerPadding ->
@@ -100,6 +109,10 @@ fun AppNavHost(
         //Data base
         composable(ScreenRoutes.FavCities) {
             FavCitiesScreen()
+        }
+        //Data base
+        composable(ScreenRoutes.CloudCities) {
+            CloudFavListScreen()
         }
     }
 }

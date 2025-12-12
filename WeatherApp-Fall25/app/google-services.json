@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "406813758258",
+    "project_id": "fall25cloudbackend",
+    "storage_bucket": "fall25cloudbackend.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406813758258:android:1a4cb762c9cfa58c18bd2b",
+        "android_client_info": {
+          "package_name": "com.example.weatherapp_fall25_ywca"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6k93sElhpwkG9owovdaskLt4l8OTvqsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

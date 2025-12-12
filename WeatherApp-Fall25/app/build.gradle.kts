@@ -5,7 +5,7 @@ plugins {
     //alias(libs.plugins.ksp)
     //alias(libs.plugins.hilt-android)
     id("kotlin-kapt") apply true
-
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -45,9 +45,12 @@ android {
 }
 
 dependencies {
-    //hilt
-  //  implementation(libs.hilt-android)
-//    ksp(libs.hilt-compiler)
+
+    // firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
+
+    //firestore
+    implementation("com.google.firebase:firebase-firestore")
 
     val nav_version = "2.9.6"
 
@@ -59,13 +62,6 @@ dependencies {
    // ksp("androidx.room:room-compiler:$room_version")
 
     kapt("androidx.room:room-compiler:$room_version")
-
-
-//    //google maps compose
-//    implementation("com.google.android.gms:play-services-maps:19.2.0")
-//  //  implementation("com.google.maps.android:maps-compose:6.12.0")
-
-
 
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.maps.android:maps-compose:2.11.3")

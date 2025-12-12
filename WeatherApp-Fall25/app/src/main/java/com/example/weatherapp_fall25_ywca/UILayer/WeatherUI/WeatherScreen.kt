@@ -13,12 +13,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weatherapp_fall25_ywca.UILayer.CloudUI.CloudDatabaseViewModel
 import com.example.weatherapp_fall25_ywca.UILayer.LocationUI.MapComposable
 
 @Composable
 fun WeatherScreen( cityName: String, wvm : WeatherViewModel = viewModel()){
 
     val data = wvm.weatherState.collectAsState()
+    val cloudDBVM : CloudDatabaseViewModel = viewModel()
 
     LaunchedEffect(cityName) {
         wvm.loadWeather(cityName)

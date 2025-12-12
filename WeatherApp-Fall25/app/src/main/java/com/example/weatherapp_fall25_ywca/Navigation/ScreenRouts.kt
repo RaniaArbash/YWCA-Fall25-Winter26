@@ -7,5 +7,6 @@ object ScreenRoutes {
     const val MapScreen = "MapScreen"
 
     const val FavCities = "FavScreen"
+    const val CloudCities = "CloudScreen"
 
 }
