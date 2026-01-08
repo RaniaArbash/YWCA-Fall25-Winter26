@@ -4,15 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import BoxObjectModelScreen from "./Screens/BoxObjectModelScreen";
 import FlexObjectModelScreen from "./Screens/FlexObjectModelScreen"
-import ColorGeneratorScreen from "./Screens/ColorGeneratorScreen";
 import BMICalculatorScreen from './Screens/BMICalculatorScreen';
-
-const tab = createBottomTabNavigator();
-  const Stack = createStackNavigator();
+import SimpleCalculatorScreen from './Screens/SimpleCalculatorScreen';
 
 export default function App() {
 
-  const myFirstStack = () => {
+const Tab = createBottomTabNavigator();
+  const Stack = createStackNavigator();
+  const MyFirstStack = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="BoxModel" component={BoxObjectModelScreen}></Stack.Screen>
@@ -22,10 +21,11 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <tab.Navigator>
-        <tab.Screen name='BMICalculator' component={BMICalculatorScreen} ></tab.Screen>
-        <tab.Screen name="LayoutModels" component={myFirstStack}></tab.Screen>
-      </tab.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="BMICalculator" component={BMICalculatorScreen} ></Tab.Screen>
+        <Tab.Screen name="SimpleCalculator" component={SimpleCalculatorScreen} ></Tab.Screen>
+        <Tab.Screen name="LayoutModels" component={MyFirstStack}></Tab.Screen>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
