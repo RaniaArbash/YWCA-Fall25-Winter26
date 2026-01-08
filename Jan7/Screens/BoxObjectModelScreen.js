@@ -1,11 +1,14 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View ,Button} from 'react-native';
 
-export default function BoxObjectModelScreen() {
+export default function BoxObjectModelScreen({navigation}) {
     return (
     <View style={styles.backgroud}>
             <View style={styles.container}>
                 <View style={styles.innerViewStyle}></View>
             </View>
+            <Button title='To FlexObject Model' onPress={() => {
+                navigation.navigate('FlexBox');
+            }}></Button>
     </View>
 );
 }

@@ -45,6 +45,7 @@ export default function ColorGeneratorScreen() {
                     validate(blue)?  setBlue(blue - 5) : setBlue(blue)
                 }}
             />
+
     </View>
 );
 }
