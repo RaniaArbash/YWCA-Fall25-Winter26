@@ -29,7 +29,8 @@ const CitySearch = ({navigation}) => {
 
     return (
     <View style={styles.parent}>
-            <SearchBar term={searchTerm}
+            <SearchBar
+                term={searchTerm}
                 onTermChanged={(newTerm) => {
                     setSearchTerm(newTerm)
                     fetchCity(newTerm)
