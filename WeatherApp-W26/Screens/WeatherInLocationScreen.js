@@ -1,37 +1,61 @@
-import { useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import Weather from '../Model/Weather';
+import * as Location from 'expo-location';
+import MapView from 'react-native-maps';
 
-const WeatherInCity = () => {
-const route = useRoute();
-const { selectedCity } = route.params;
+
+const WeatherInLocationScreen = () => {
+//const route = useRoute();
 
 const [weather, setWeather] = useState(null);
 const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
+const [region, setRegion] = useState(null);
 
-  const fetchWeather = async (city) => {
+
+    const fetchWeather = async (lat, lon) => {
+        console.log(lat)
+        console.log(lon)
     try {
     const API_KEY = 'ecf5553cc5b15522aea8026824cb8085';
     const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
     );
     if (!response.ok) throw new Error('City not found');
- 
-      const result = await response.json();
-    setWeather(new Weather(result));
+        const result = await response.json();
+        setWeather(new Weather(result));
     } catch (err) {
-      setError(err.message);
+        setError(err.message);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
- 
-useEffect(() => {
-    fetchWeather(selectedCity);
-}, []);
-
+};
+    async function getCurrentLocation() {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+            return;
+        }
+        await Location.watchPositionAsync({
+            accuracy: Location.Accuracy.BestForNavigation,
+            distanceInterval: 10,
+            timeInterval: 1000
+        }, (location) => {
+        const region = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.08,
+        longitudeDelta: 0.08,
+        };
+        console.log("region is : " + region.latitude)
+        setRegion(region)
+            fetchWeather(location.coords.latitude, location.coords.longitude);
+        })
+    }
+    useEffect(() => {
+        getCurrentLocation();
+    }, []);
 if (loading) return <ActivityIndicator size='large' style={styles.center} />;
 
 if (error)
@@ -42,23 +66,28 @@ if (error)
     );
 
 return (
-    <View style={styles.parent}>{weather && <WeatherCard {...weather} />}</View>
+    <View style={styles.parent}>
+        {weather && <WeatherCard {...weather} />}
+    <MapView
+            initialRegion={region}
+            region={region}
+            style={styles.map} />
+    </View>
 );
 };
 const WeatherCard = ({
-  cityName,
-  temp,
-  description,
-  feelsLike,
-  iconCode,
-  humidity,
+    lat,
+    lon,
+temp,
+description,
+feelsLike,
+iconCode,
+humidity,
 }) => {
-  const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-
-  console.log(iconUrl)
-  return (
+const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+return (
     <View style={styles.card}>
-      <Text style={styles.cityText}>{cityName}</Text>
+        <Text style={styles.cityText}>{lon} - {lat}</Text>
 
       <Image
         source={{ uri: iconUrl }}
@@ -68,12 +97,13 @@ const WeatherCard = ({
       <Text style={styles.tempText}>{temp}°C</Text>
       <Text style={styles.descText}>{description?.toUpperCase()}</Text>
 
-      <View style={styles.detailsRow}>
+    <View style={styles.detailsRow}>
         <Text style={styles.detail}>Feels like: {feelsLike}°C</Text>
         <Text style={styles.detail}>Humidity: {humidity}%</Text>
-      </View>
+        </View>
     </View>
-  );
+    );
+      
 };
 
 
@@ -82,14 +112,17 @@ parent: {
     flex: 1,
     backgroundColor: '#f5f5f5',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   center: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  card: {
+    alignItems: 'flex-start',
+    },
+map: {
+    width: '100%',
+    height: '50%',
+},
+card: {
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 30,
@@ -135,4 +168,4 @@ parent: {
   },
 });
  
-export default WeatherInCity;
+export default WeatherInLocationScreen;
