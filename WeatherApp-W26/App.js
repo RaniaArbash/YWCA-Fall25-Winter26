@@ -6,10 +6,17 @@ import CitySearch from "./Screens/CitySearch";
 import WeatherInCity from "./Screens/WeatherInCity"
 import WeatherInLocationScreen from "./Screens/WeatherInLocationScreen";
 import MapScreen from "./Screens/MapScreen";
+import { useEffect } from "react";
+import { initTable } from "./Model/Database";
+import FavCitiesScreen from "./Screens/FavCitiesScreen";
 export default function App() {
     const Stack = createStackNavigator();
     const Tab = createBottomTabNavigator();
 
+  useEffect(() => {
+        initTable();
+    }, []);
+  
   const SearchStack = () => {
     return (
       <Stack.Navigator>
@@ -25,7 +32,7 @@ export default function App() {
         <Tab.Screen name="Current Location" component={WeatherInLocationScreen} ></Tab.Screen>
         <Tab.Screen name="City Search" component={SearchStack}></Tab.Screen>
         <Tab.Screen name="Map" component={MapScreen}></Tab.Screen>
-
+        <Tab.Screen name="FavCities" component={FavCitiesScreen}></Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
   );

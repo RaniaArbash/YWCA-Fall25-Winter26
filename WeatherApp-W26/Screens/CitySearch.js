@@ -1,11 +1,27 @@
-import { StyleSheet, View, FlatList ,Text,Button, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, FlatList ,Text,Alert, TouchableOpacity} from 'react-native';
 import SearchBar from '../Components/SearchBar';
 import { useState } from 'react';
-
-
+import { db } from '../Model/Database';
 const CitySearch = ({navigation}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [citiesList, setCitiesList] = useState([]);
+    const [selectedCity, setselectedCity] = useState("")
+
+    const insertCityIntoDB = async (city) => {
+        if (!db) {
+            console.log("No database");
+            return;
+        }
+    const statement = await db.prepareAsync('INSERT INTO cities (city) VALUES ($value)');
+    try {
+        let result = await statement.executeAsync({ $value: city });
+            console.log("City inserted successfully:", result);
+    }
+    catch (error) {
+    console.error('Error inserting city:', error);
+    }        
+    }
+
 
     const fetchCity = async (query) => {
         if (query.length > 2) {
@@ -27,6 +43,23 @@ const CitySearch = ({navigation}) => {
             }
     }
 
+    
+    const showAnAlert = (c) => {
+        console.log(c)
+        Alert.alert('Add to favorait City???', 'Do you want to save this city in DB?', [
+            {
+                text: 'Yes, save to db and go to weather', onPress: () => { 
+                    insertCityIntoDB(c)
+                    navigation.navigate('WeatherInCity',{selectedCity: c})
+                
+            } },
+            {
+                text: 'No, just go to weather', onPress: () => { 
+                        navigation.navigate('WeatherInCity',{selectedCity: c})
+            } },
+        ])
+    }
+
     return (
     <View style={styles.parent}>
             <SearchBar
@@ -40,9 +73,9 @@ const CitySearch = ({navigation}) => {
                 data={citiesList}
                 keyExtractor={(item, i) => i}
                 renderItem={({ item }) =>
-                    <TouchableOpacity  onPress={() => {
-                        console.log("press on " + item)
-                        navigation.navigate('WeatherInCity',{selectedCity: item})
+                    <TouchableOpacity onPress={() => {
+                        setselectedCity(item)
+                        showAnAlert(item)
                     }}>
                         <Text style={styles.title}>{item}</Text>
                     </TouchableOpacity>
