@@ -3,6 +3,8 @@ import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, View } from 'react-native';
 import * as Location from 'expo-location';
 import Weather from '../Model/Weather';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWeatherForLocation } from '../ReduxToolkit/WeatherSlice';
 
 export default function MapScreen() {
 
@@ -10,6 +12,9 @@ export default function MapScreen() {
     const [marker, setMarker] = useState(null);
     const [weather, setWeather] = useState(null);
 
+   // const weather = useSelector((state) => state.weather.current); 
+    //const dispatch = useDispatch();
+    
 async function getCurrentLocation() {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {

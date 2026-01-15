@@ -1,6 +1,5 @@
 import { createSlice , createAsyncThunk} from "@reduxjs/toolkit";
 
-
 export const fetchWeatherForCity = createAsyncThunk("weather/fetchWeatherByName",
     async (city) => {
         const res = await fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=ecf5553cc5b15522aea8026824cb8085&units=metric");

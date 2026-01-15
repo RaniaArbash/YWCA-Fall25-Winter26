@@ -12,11 +12,13 @@ const WeatherInLocationScreen = () => {
 
 //const [weather, setWeather] = useState(null);
 //const [loading, setLoading] = useState(true);
-const [error, setError] = useState(null);
+//const [error, setError] = useState(null);
 const [region, setRegion] = useState(null);
 
     const weather = useSelector((state) => state.weather.current); 
     const loading = useSelector((state) => state.weather.loading);
+    const error = useSelector((state) => state.weather.error);
+
     const dispatch = useDispatch();
     
 //     const fetchWeather = async (lat, lon) => {

@@ -3,33 +3,45 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import Weather from '../Model/Weather';
 
+import { useDispatch, useSelector } from 'react-redux';
+import WeatherCard from '../Components/WeatherCard';
+import { fetchWeatherForCity } from '../ReduxToolkit/WeatherSlice';
+
+
 const WeatherInCity = () => {
 const route = useRoute();
 const { selectedCity } = route.params;
 
-const [weather, setWeather] = useState(null);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState(null);
+// const [weather, setWeather] = useState(null);
+// const [loading, setLoading] = useState(true);
+// const [error, setError] = useState(null);
 
-  const fetchWeather = async (city) => {
-    try {
-    const API_KEY = 'ecf5553cc5b15522aea8026824cb8085';
-    const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-    );
-    if (!response.ok) throw new Error('City not found');
+    const weather = useSelector((state) => state.weather.current); 
+    const loading = useSelector((state) => state.weather.loading);
+    const error = useSelector((state) => state.weather.error);
+
+  const dispatch = useDispatch();
+  
+  // const fetchWeather = async (city) => {
+  //   try {
+  //   const API_KEY = 'ecf5553cc5b15522aea8026824cb8085';
+  //   const response = await fetch(
+  //       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+  //   );
+  //   if (!response.ok) throw new Error('City not found');
  
-      const result = await response.json();
-    setWeather(new Weather(result));
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
- 
+  //     const result = await response.json();
+  //   setWeather(new Weather(result));
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
 useEffect(() => {
-    fetchWeather(selectedCity);
+  //fetchWeather(selectedCity);
+  dispatch(fetchWeatherForCity(selectedCity));
 }, []);
 
 if (loading) return <ActivityIndicator size='large' style={styles.center} />;
@@ -42,40 +54,11 @@ if (error)
     );
 
 return (
-    <View style={styles.parent}>{weather && <WeatherCard {...weather} />}</View>
+  <View style={styles.parent}>
+    <WeatherCard weather={weather}/>
+    </View>
 );
 };
-const WeatherCard = ({
-  cityName,
-  temp,
-  description,
-  feelsLike,
-  iconCode,
-  humidity,
-}) => {
-  const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-
-  console.log(iconUrl)
-  return (
-    <View style={styles.card}>
-      <Text style={styles.cityText}>{cityName}</Text>
-
-      <Image
-        source={{ uri: iconUrl }}
-        style={styles.weatherIcon}
-      />
-
-      <Text style={styles.tempText}>{temp}°C</Text>
-      <Text style={styles.descText}>{description?.toUpperCase()}</Text>
-
-      <View style={styles.detailsRow}>
-        <Text style={styles.detail}>Feels like: {feelsLike}°C</Text>
-        <Text style={styles.detail}>Humidity: {humidity}%</Text>
-      </View>
-    </View>
-  );
-};
-
 
 const styles = StyleSheet.create({
 parent: {
@@ -134,5 +117,5 @@ parent: {
     color: '#555',
   },
 });
- 
+
 export default WeatherInCity;
