@@ -3,34 +3,39 @@ import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import Weather from '../Model/Weather';
 import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
-
+import { useDispatch, useSelector } from 'react-redux';
+import WeatherCard from '../Components/WeatherCard';
+import { fetchWeatherForLocation } from '../ReduxToolkit/WeatherSlice';
 
 const WeatherInLocationScreen = () => {
 //const route = useRoute();
 
-const [weather, setWeather] = useState(null);
-const [loading, setLoading] = useState(true);
+//const [weather, setWeather] = useState(null);
+//const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
 const [region, setRegion] = useState(null);
 
-
-    const fetchWeather = async (lat, lon) => {
-        console.log(lat)
-        console.log(lon)
-    try {
-    const API_KEY = 'ecf5553cc5b15522aea8026824cb8085';
-    const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-    );
-    if (!response.ok) throw new Error('City not found');
-        const result = await response.json();
-        setWeather(new Weather(result));
-    } catch (err) {
-        setError(err.message);
-    } finally {
-        setLoading(false);
-    }
-};
+    const weather = useSelector((state) => state.weather.current); 
+    const loading = useSelector((state) => state.weather.loading);
+    const dispatch = useDispatch();
+    
+//     const fetchWeather = async (lat, lon) => {
+//         console.log(lat)
+//         console.log(lon)
+//     try {
+//     const API_KEY = 'ecf5553cc5b15522aea8026824cb8085';
+//     const response = await fetch(
+//         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+//     );
+//     if (!response.ok) throw new Error('City not found');
+//         const result = await response.json();
+//         setWeather(new Weather(result));
+//     } catch (err) {
+//         setError(err.message);
+//     } finally {
+//         setLoading(false);
+//     }
+// };
     async function getCurrentLocation() {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
@@ -50,7 +55,8 @@ const [region, setRegion] = useState(null);
         };
         console.log("region is : " + region.latitude)
         setRegion(region)
-            fetchWeather(location.coords.latitude, location.coords.longitude);
+        //fetchWeather(location.coords.latitude, location.coords.longitude);
+        dispatch(fetchWeatherForLocation({ lat: location.coords.latitude, lon: location.coords.longitude }));
         })
     }
     useEffect(() => {
@@ -67,7 +73,7 @@ if (error)
 
 return (
     <View style={styles.parent}>
-        {weather && <WeatherCard {...weather} />}
+    <WeatherCard weather={weather}/>
     <MapView
             initialRegion={region}
             region={region}
@@ -75,36 +81,38 @@ return (
     </View>
 );
 };
-const WeatherCard = ({
-    lat,
-    lon,
-temp,
-description,
-feelsLike,
-iconCode,
-humidity,
-}) => {
-const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-return (
-    <View style={styles.card}>
-        <Text style={styles.cityText}>{lon} - {lat}</Text>
 
-      <Image
-        source={{ uri: iconUrl }}
-        style={styles.weatherIcon}
-      />
 
-      <Text style={styles.tempText}>{temp}°C</Text>
-      <Text style={styles.descText}>{description?.toUpperCase()}</Text>
+// // const WeatherCard = ({
+// //     lat,
+// //     lon,
+// // temp,
+// // description,
+// // feelsLike,
+// // iconCode,
+// // humidity,
+// // }) => {
+// // const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+// // return (
+// //     <View style={styles.card}>
+// //         <Text style={styles.cityText}>{lon} - {lat}</Text>
 
-    <View style={styles.detailsRow}>
-        <Text style={styles.detail}>Feels like: {feelsLike}°C</Text>
-        <Text style={styles.detail}>Humidity: {humidity}%</Text>
-        </View>
-    </View>
-    );
+// //       <Image
+// //         source={{ uri: iconUrl }}
+// //         style={styles.weatherIcon}
+// //       />
+
+// //       <Text style={styles.tempText}>{temp}°C</Text>
+// //       <Text style={styles.descText}>{description?.toUpperCase()}</Text>
+
+// //     <View style={styles.detailsRow}>
+// //         <Text style={styles.detail}>Feels like: {feelsLike}°C</Text>
+// //         <Text style={styles.detail}>Humidity: {humidity}%</Text>
+// //         </View>
+// //     </View>
+// //     );
       
-};
+// };
 
 
 const styles = StyleSheet.create({

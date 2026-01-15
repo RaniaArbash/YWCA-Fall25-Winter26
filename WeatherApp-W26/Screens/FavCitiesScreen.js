@@ -56,7 +56,7 @@ const FavCitiesScreen = () => {
                     <View style={styles.viewStyle}>
                         <Text style={styles.title}>{item}</Text>
                         <TouchableOpacity onPress={(item) => {
-                            (item)
+                            handelDelete(item)
                         }}>
                             <Feather name="trash" style={styles.iconStyle}></Feather>
                         </TouchableOpacity>

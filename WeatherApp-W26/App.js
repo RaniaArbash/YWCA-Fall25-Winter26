@@ -9,6 +9,8 @@ import MapScreen from "./Screens/MapScreen";
 import { useEffect } from "react";
 import { initTable } from "./Model/Database";
 import FavCitiesScreen from "./Screens/FavCitiesScreen";
+import { Provider } from "react-redux";
+import store from "./ReduxToolkit/ReduxStore";
 export default function App() {
     const Stack = createStackNavigator();
     const Tab = createBottomTabNavigator();
@@ -27,6 +29,7 @@ export default function App() {
   }
 
   return (
+    <Provider store={store}>
     <NavigationContainer>
     <Tab.Navigator>
         <Tab.Screen name="Current Location" component={WeatherInLocationScreen} ></Tab.Screen>
@@ -34,6 +37,7 @@ export default function App() {
         <Tab.Screen name="Map" component={MapScreen}></Tab.Screen>
         <Tab.Screen name="FavCities" component={FavCitiesScreen}></Tab.Screen>
       </Tab.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+      </Provider>
   );
 }
