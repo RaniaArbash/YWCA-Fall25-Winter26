@@ -1,13 +1,16 @@
-import { StyleSheet, View, FlatList ,Text, Button, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, FlatList ,Text,Alert, Button, TouchableOpacity} from 'react-native';
 import { useEffect, useState } from 'react';
 import { db } from '../Model/Database';
 import { Feather } from '@expo/vector-icons';
+import WeatherBarChart from '../Components/BarChart';
 
 const FavCitiesScreen = () => {
+
+  const API_KEY = "ecf5553cc5b15522aea8026824cb8085"; 
     const [dbCitiesList, setdbCitiesList] = useState([]);
-
-
- const confirmDelete = (city) => {
+    const [chartData, setChartData] = useState([]);
+    const [showChart, setShowChart] = useState(false);
+const confirmDelete = (city) => {
         Alert.alert("Confirm Delete",
             "Are you sure you want to delete this city form DB?",
             [
@@ -15,11 +18,34 @@ const FavCitiesScreen = () => {
                 { text: "Delete", onPress: () => { handelDelete(city) } }
             ])
     }
+const handelDelete = async (city) => {
+    await db.runAsync(
+        "DELETE FROM cities WHERE city = $city",
+        { $city: city }
+    );
+    fetchCitiesFromDatabase();
+};
+    
+    const fetchWeatherForCities = async () => { 
+        console.log("in fetch weather for cities")
+        const results = await Promise.all(
+        dbCitiesList.map(async (city) => { 
+        const res = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+        );
+            const json = await res.json();
+            
+        return {
+            city,
+            temp: json.main.temp
+        };
+    })
+        );
+    console.log(results)
 
+    setChartData(results);
+    setShowChart(true);
 
-  const handelDelete = async(city) => {
-        await db.runAsync("Delete From cities WHERE city = $city" , {$city : city} )
-        fetchCitiesFromDatabase()
     }
 
     const fetchCitiesFromDatabase = async () => {
@@ -49,6 +75,15 @@ const FavCitiesScreen = () => {
     return (
         <View style={styles.parent}>    
             <Button title='Reload' onPress={()=>{fetchCitiesFromDatabase()}}></Button>
+        <Button
+        title={showChart ? "Hide Chart" : "Show Chart"}
+        onPress={() => {
+            showChart ? setShowChart(false) : fetchWeatherForCities();
+        }}
+        />
+        {showChart && chartData.length > 0 && (
+        <WeatherBarChart weatherData={chartData} />
+        )}
             <FlatList
                 data={dbCitiesList}
                 keyExtractor={(item, i) => i}
@@ -56,7 +91,7 @@ const FavCitiesScreen = () => {
                     <View style={styles.viewStyle}>
                         <Text style={styles.title}>{item}</Text>
                         <TouchableOpacity onPress={(item) => {
-                            handelDelete(item)
+                            confirmDelete(item)
                         }}>
                             <Feather name="trash" style={styles.iconStyle}></Feather>
                         </TouchableOpacity>

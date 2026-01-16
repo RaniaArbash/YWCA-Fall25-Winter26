@@ -41,7 +41,7 @@ const { selectedCity } = route.params;
 
 useEffect(() => {
   //fetchWeather(selectedCity);
-  dispatch(fetchWeatherForCity(selectedCity));
+  dispatch(fetchWeatherForCity(selectedCity))
 }, []);
 
 if (loading) return <ActivityIndicator size='large' style={styles.center} />;
@@ -59,6 +59,37 @@ return (
     </View>
 );
 };
+// const WeatherCard = ({
+//   cityName,
+//   temp,
+//   description,
+//   feelsLike,
+//   iconCode,
+//   humidity,
+// }) => {
+//   const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+//   console.log(iconUrl)
+//   return (
+//     <View style={styles.card}>
+//       <Text style={styles.cityText}>{cityName}</Text>
+
+//       <Image
+//         source={{ uri: iconUrl }}
+//         style={styles.weatherIcon}
+//       />
+
+//       <Text style={styles.tempText}>{temp}°C</Text>
+//       <Text style={styles.descText}>{description?.toUpperCase()}</Text>
+
+//       <View style={styles.detailsRow}>
+//         <Text style={styles.detail}>Feels like: {feelsLike}°C</Text>
+//         <Text style={styles.detail}>Humidity: {humidity}%</Text>
+//       </View>
+//     </View>
+//   );
+// };
+
 
 const styles = StyleSheet.create({
 parent: {

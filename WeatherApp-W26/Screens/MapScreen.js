@@ -12,9 +12,6 @@ export default function MapScreen() {
     const [marker, setMarker] = useState(null);
     const [weather, setWeather] = useState(null);
 
-   // const weather = useSelector((state) => state.weather.current); 
-    //const dispatch = useDispatch();
-    
 async function getCurrentLocation() {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
@@ -64,8 +61,8 @@ return (
                 setMarker(e.nativeEvent.coordinate)
                 fetchWeather(e.nativeEvent.coordinate.latitude,e.nativeEvent.coordinate.longitude)
             }}
-            // initialRegion={region}
-            // region={region}
+            initialRegion={region}
+            region={region}
             style={styles.map} >
             {weather && <Marker
                 coordinate={marker}
